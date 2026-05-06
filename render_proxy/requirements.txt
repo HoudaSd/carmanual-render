@@ -1,1 +1,7 @@
+# render_proxy/requirements.txt
+# Léger — uniquement pour le proxy Render (~100 MB RAM)
 
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+httpx>=0.27.0          # Pour transférer les requêtes vers Pi5
+firebase-admin>=6.5.0  # Pour vérifier les tokens JWT
