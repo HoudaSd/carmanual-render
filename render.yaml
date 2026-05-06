@@ -1,1 +1,31 @@
+# render.yaml
+# Placer à la racine du repo GitHub
+# Render le détecte automatiquement
 
+services:
+  - type: web
+    name: carmanual-proxy
+    runtime: python
+    region: frankfurt   # Choisir la région la plus proche
+    plan: free          # Gratuit — suffisant pour le proxy léger
+
+    # Dossier contenant proxy.py et requirements.txt
+    rootDir: render_proxy
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn proxy:app --host 0.0.0.0 --port $PORT
+
+    # Variables d'environnement
+    # ⚠️ Ne pas mettre les valeurs ici — les définir sur le Dashboard Render
+    envVars:
+      - key: PI5_URL
+        value: https://METTRE-URL-NGROK-ICI.ngrok.io
+
+      - key: FIREBASE_SERVICE_ACCOUNT
+        value: METTRE_JSON_SERVICE_ACCOUNT_ICI
+
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+
+    # Santé
+    healthCheckPath: /health
